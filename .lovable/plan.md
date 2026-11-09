@@ -112,6 +112,14 @@ The API contract is written down in `API_CONTRACT.md`, using REST + JSON, with S
 6. **Activity + the remaining Settings tabs.**
 7. **Polish:** Responsive checks, empty/error/loading states everywhere, motion, `API_CONTRACT.md`, and small tests for the business rules (the $2 cap, .shop only, sequential naming, USED is permanent, the `/adultp/` URL, next-run calculation).
 
+## Final requirements from your approval notes
+- **Requests:** Production calls go to `/api` on the same server. The API URL can be changed only for development. The app is built as a lightweight static bundle for your 1 GB VPS.
+- **Credentials:** None are kept in browser storage, in either mode. Settings sends credentials to the backend once and only shows whether each one is set.
+- **Next domain number:** Comes from the backend (`/purchase/next-number`). Demo mode uses its own counter.
+- **Purchase safety:** If a purchase ends in an *uncertain* state (for example a timeout after the order was sent), the Retry purchase button is replaced by "Verify with registrar" and "Ask AI". Retry only appears when the backend says the purchase can be retried safely.
+- **Live mode:** Shows only what the backend actually reports and has saved. Demo mode shows a "Demo" badge on every screen and every AI card.
+- **`API_CONTRACT.md`:** Lists every endpoint with its request and response types, the error codes, the SSE events and the job-state transitions.
+
 ## Open points (defaults if you don't say otherwise)
 - Naming prefix "simi" with a configurable start number.
 - Default timezone Africa/Lagos.
