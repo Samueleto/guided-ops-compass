@@ -63,11 +63,11 @@ describe("rotation rules", () => {
   it("daily schedule respects timezone", () => {
     const from = new Date("2026-11-09T10:00:00Z");
     const [run] = nextRuns({ mode: "daily", time: "09:00", timezone: "Africa/Lagos" }, from, 1);
-    expect(run.toISOString()).toBe("2026-11-10T08:00:00.000Z");
+    expect(run!.toISOString()).toBe("2026-11-10T08:00:00.000Z");
   });
   it("weekly schedule lands on the chosen weekday", () => {
     const from = new Date("2026-11-09T10:00:00Z"); // Monday
     const [run] = nextRuns({ mode: "weekly", weekday: 5, time: "18:30", timezone: "UTC" }, from, 1);
-    expect(run.toISOString()).toBe("2026-11-13T18:30:00.000Z");
+    expect(run!.toISOString()).toBe("2026-11-13T18:30:00.000Z");
   });
 });

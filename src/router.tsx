@@ -13,8 +13,6 @@ export const getRouter = () => {
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
-    // Data comes from the browser (external REST API or demo store), so pages render client-side.
-    defaultSsr: false,
   });
 
   return router;

@@ -11,7 +11,7 @@ export function getMode(): Mode {
   if (!isBrowser()) return "demo";
   const v = localStorage.getItem(MODE_KEY);
   if (v === "live" || v === "demo") return v;
-  return import.meta.env.VITE_DEFAULT_MODE === "live" ? "live" : "demo";
+  return import.meta.env["VITE_DEFAULT_MODE"] === "live" ? "live" : "demo";
 }
 
 export function setMode(m: Mode) {
@@ -25,7 +25,7 @@ export function getApiBase(): string {
     const v = localStorage.getItem(BASE_KEY);
     if (v) return v;
   }
-  return import.meta.env.VITE_API_BASE_URL || "/api";
+  return import.meta.env["VITE_API_BASE_URL"] || "/api";
 }
 
 export function setDevApiBase(v: string) {
