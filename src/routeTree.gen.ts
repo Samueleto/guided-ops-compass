@@ -16,6 +16,7 @@ import { Route as BuyRouteImport } from './routes/buy'
 import { Route as RotationRouteImport } from './routes/rotation'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as DomainsIndexRouteImport } from './routes/domains.index'
+import { Route as DomainsNameRouteImport } from './routes/domains.$name'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,11 @@ const DomainsIndexRoute = DomainsIndexRouteImport.update({
   path: '/domains/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DomainsNameRoute = DomainsNameRouteImport.update({
+  id: '/domains/$name',
+  path: '/domains/$name',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/buy': typeof BuyRoute
   '/rotation': typeof RotationRoute
   '/settings': typeof SettingsRoute
+  '/domains/$name': typeof DomainsNameRoute
   '/domains/': typeof DomainsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/buy': typeof BuyRoute
   '/rotation': typeof RotationRoute
   '/settings': typeof SettingsRoute
+  '/domains/$name': typeof DomainsNameRoute
   '/domains': typeof DomainsIndexRoute
 }
 export interface FileRoutesById {
@@ -79,15 +87,30 @@ export interface FileRoutesById {
   '/buy': typeof BuyRoute
   '/rotation': typeof RotationRoute
   '/settings': typeof SettingsRoute
+  '/domains/$name': typeof DomainsNameRoute
   '/domains/': typeof DomainsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/activity' | '/ai' | '/buy' | '/rotation' | '/settings' | '/domains/'
+    | '/'
+    | '/activity'
+    | '/ai'
+    | '/buy'
+    | '/rotation'
+    | '/settings'
+    | '/domains/$name'
+    | '/domains/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/activity' | '/ai' | '/buy' | '/rotation' | '/settings' | '/domains'
+    | '/'
+    | '/activity'
+    | '/ai'
+    | '/buy'
+    | '/rotation'
+    | '/settings'
+    | '/domains/$name'
+    | '/domains'
   id:
     | '__root__'
     | '/'
@@ -96,6 +119,7 @@ export interface FileRouteTypes {
     | '/buy'
     | '/rotation'
     | '/settings'
+    | '/domains/$name'
     | '/domains/'
   fileRoutesById: FileRoutesById
 }
@@ -106,6 +130,7 @@ export interface RootRouteChildren {
   BuyRoute: typeof BuyRoute
   RotationRoute: typeof RotationRoute
   SettingsRoute: typeof SettingsRoute
+  DomainsNameRoute: typeof DomainsNameRoute
   DomainsIndexRoute: typeof DomainsIndexRoute
 }
 
@@ -160,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DomainsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/domains/$name': {
+      id: '/domains/$name'
+      path: '/domains/$name'
+      fullPath: '/domains/$name'
+      preLoaderRoute: typeof DomainsNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -170,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuyRoute: BuyRoute,
   RotationRoute: RotationRoute,
   SettingsRoute: SettingsRoute,
+  DomainsNameRoute: DomainsNameRoute,
   DomainsIndexRoute: DomainsIndexRoute,
 }
 export const routeTree = rootRouteImport
