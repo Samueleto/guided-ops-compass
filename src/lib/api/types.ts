@@ -12,25 +12,25 @@ export type DomainStatus =
 
 export interface DomainUsage {
   activatedAt: string;
-  deactivatedAt?: string;
+  deactivatedAt?: string | undefined;
   trigger: "manual" | "schedule";
 }
 
 export interface Domain {
   name: string;
   status: DomainStatus;
-  registeredAt?: string;
-  expiresAt?: string;
-  price?: number;
+  registeredAt?: string | undefined;
+  expiresAt?: string | undefined;
+  price?: number | undefined;
   verified: boolean;
   workerAttached: boolean;
   sslActive: boolean;
   zoneActive: boolean;
   /** Set once the domain has ever been activated in Kuma. Never cleared. */
-  usedAt?: string;
+  usedAt?: string | undefined;
   usageHistory: DomainUsage[];
-  lastError?: OpError;
-  jobId?: string;
+  lastError?: OpError | undefined;
+  jobId?: string | undefined;
 }
 
 export interface OpError {
@@ -41,7 +41,7 @@ export interface OpError {
   /** True only when the backend confirms retrying cannot cause a duplicate charge or change. */
   retrySafe: boolean;
   /** Outcome unknown (e.g. timeout after order sent). Must verify before any retry. */
-  uncertain?: boolean;
+  uncertain?: boolean | undefined;
 }
 
 export type StageStatus =
@@ -57,10 +57,10 @@ export interface Stage {
   key: string;
   label: string;
   status: StageStatus;
-  message?: string;
-  startedAt?: string;
-  finishedAt?: string;
-  error?: OpError;
+  message?: string | undefined;
+  startedAt?: string | undefined;
+  finishedAt?: string | undefined;
+  error?: OpError | undefined;
 }
 
 export type ItemStatus = "pending" | "running" | "done" | "attention" | "failed" | "skipped";
@@ -81,8 +81,8 @@ export interface Job {
   updatedAt: string;
   currentIndex: number;
   items: JobItem[];
-  trigger?: "manual" | "schedule";
-  scheduleId?: string;
+  trigger?: "manual" | "schedule" | undefined;
+  scheduleId?: string | undefined;
 }
 
 export type IntegrationId = "namecheap" | "cloudflare" | "kuma" | "openrouter";
@@ -91,9 +91,9 @@ export interface Integration {
   id: IntegrationId;
   name: string;
   status: "connected" | "degraded" | "disconnected" | "unknown";
-  latencyMs?: number;
-  checkedAt?: string;
-  message?: string;
+  latencyMs?: number | undefined;
+  checkedAt?: string | undefined;
+  message?: string | undefined;
 }
 
 export type AiState = "monitoring" | "investigating" | "assisting" | "idle" | "offline";
@@ -101,11 +101,11 @@ export type AiState = "monitoring" | "investigating" | "assisting" | "idle" | "o
 export interface Overview {
   counts: Record<DomainStatus, number>;
   total: number;
-  activeDomain?: string;
-  activeUrl?: string;
-  balance?: number;
+  activeDomain?: string | undefined;
+  activeUrl?: string | undefined;
+  balance?: number | undefined;
   currency: string;
-  nextRotationAt?: string;
+  nextRotationAt?: string | undefined;
   ai: { state: AiState; focus?: string; updatedAt?: string };
   runningJobs: Job[];
   integrations: Integration[];
@@ -114,10 +114,10 @@ export interface Overview {
 export interface Candidate {
   domain: string;
   available: boolean;
-  price?: number;
+  price?: number | undefined;
   premium: boolean;
   /** Reason the domain cannot be bought; undefined means eligible. */
-  excludedReason?: string;
+  excludedReason?: string | undefined;
 }
 
 export interface NextNumber {
@@ -128,54 +128,54 @@ export interface NextNumber {
 
 export interface Quote {
   candidates: Candidate[];
-  balance?: number;
+  balance?: number | undefined;
   maxPrice: number;
   currency: string;
 }
 
 export interface KumaStatus {
   connected: boolean;
-  currentUrl?: string;
-  currentDomain?: string;
-  campaign?: string;
+  currentUrl?: string | undefined;
+  currentDomain?: string | undefined;
+  campaign?: string | undefined;
   landingPath: "/adultp/";
-  checkedAt?: string;
-  message?: string;
+  checkedAt?: string | undefined;
+  message?: string | undefined;
 }
 
 export type ScheduleMode = "interval" | "daily" | "weekly";
 
 export interface ScheduleInput {
   mode: ScheduleMode;
-  intervalMinutes?: number;
+  intervalMinutes?: number | undefined;
   /** HH:mm in schedule timezone */
-  time?: string;
+  time?: string | undefined;
   /** 0 = Sunday */
-  weekday?: number;
+  weekday?: number | undefined;
   timezone: string;
-  firstDomain?: string;
+  firstDomain?: string | undefined;
 }
 
 export interface Schedule extends ScheduleInput {
   id: string;
   state: "active" | "paused" | "waiting_for_domains";
   createdAt: string;
-  nextRunAt?: string;
-  lastRunAt?: string;
-  lastResult?: "success" | "failed" | "no_domains";
+  nextRunAt?: string | undefined;
+  lastRunAt?: string | undefined;
+  lastResult?: "success" | "failed" | "no_domains" | undefined;
   runs: number;
 }
 
 export interface RotationRun {
   id: string;
   jobId: string;
-  domain?: string;
-  previousUrl?: string;
-  newUrl?: string;
+  domain?: string | undefined;
+  previousUrl?: string | undefined;
+  newUrl?: string | undefined;
   trigger: "manual" | "schedule";
   state: JobState | "no_domains";
   startedAt: string;
-  finishedAt?: string;
+  finishedAt?: string | undefined;
 }
 
 export type ActivityType =
@@ -198,26 +198,26 @@ export interface Activity {
   title: string;
   summary: string;
   at: string;
-  domain?: string;
-  jobId?: string;
-  explanation?: string;
-  steps?: { label: string; status: StageStatus }[];
-  details?: Record<string, string>;
+  domain?: string | undefined;
+  jobId?: string | undefined;
+  explanation?: string | undefined;
+  steps?: { label: string | undefined; status: StageStatus }[];
+  details?: Record<string, string> | undefined;
 }
 
 export interface ActivityQuery {
-  q?: string;
-  type?: ActivityType | "all";
-  status?: ActivityStatus | "all";
-  since?: string;
+  q?: string | undefined;
+  type?: ActivityType | "all" | undefined;
+  status?: ActivityStatus | "all" | undefined;
+  since?: string | undefined;
 }
 
 export interface DomainQuery {
-  q?: string;
-  status?: DomainStatus | "all";
-  page?: number;
-  pageSize?: number;
-  sort?: "name" | "registered" | "status";
+  q?: string | undefined;
+  status?: DomainStatus | "all" | undefined;
+  page?: number | undefined;
+  pageSize?: number | undefined;
+  sort?: "name" | "registered" | "status" | undefined;
 }
 
 export interface Paged<T> {
@@ -241,24 +241,24 @@ export type AiBlockKind =
 export interface AiCheckItem {
   label: string;
   status: "ok" | "warn" | "error" | "running" | "pending";
-  detail?: string;
+  detail?: string | undefined;
 }
 
 export interface AiAction {
   label: string;
   op: "retry_domain" | "check_integrations" | "rotate_now" | "verify_registration" | "open";
-  target?: string;
+  target?: string | undefined;
 }
 
 export interface AiBlock {
   id: string;
   kind: AiBlockKind;
   title: string;
-  body?: string;
-  items?: AiCheckItem[];
-  action?: AiAction;
-  tool?: string;
-  status?: "running" | "done" | "error";
+  body?: string | undefined;
+  items?: AiCheckItem[] | undefined;
+  action?: AiAction | undefined;
+  tool?: string | undefined;
+  status?: "running" | "done" | "error" | undefined;
 }
 
 export interface AiMessage {
@@ -267,7 +267,7 @@ export interface AiMessage {
   text: string;
   blocks: AiBlock[];
   at: string;
-  model?: string;
+  model?: string | undefined;
 }
 
 export interface AiConversation {
@@ -310,7 +310,7 @@ export interface Settings {
     fallbackModel: string;
     monitoring: boolean;
     autoRecovery: boolean;
-    usage?: { month: string; requests: number; costUsd: number; daily: { day: string; requests: number }[] };
+    usage?: { month: string | undefined; requests: number; costUsd: number; daily: { day: string; requests: number }[] };
   };
   automation: {
     defaultQuantity: number;
@@ -327,6 +327,6 @@ export type SettingsSection = Exclude<keyof Settings, "secretsSet">;
 
 export interface Health {
   ok: boolean;
-  version?: string;
+  version?: string | undefined;
   time: string;
 }

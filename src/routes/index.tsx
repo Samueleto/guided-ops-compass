@@ -1,23 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PageHeader, EmptyState } from "@/components/app/ui";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [{ title: "Dashboard — Domain Manager AI" }, { name: "description", content: "Dashboard in Domain Manager AI." }, { property: "og:title", content: "Dashboard — Domain Manager AI" }, { property: "og:description", content: "Dashboard in Domain Manager AI." }] }),
+  component: Page,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Page() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div>
+      <PageHeader title="Dashboard" />
+      <EmptyState title="This page is not built yet" body="The building blocks are ready; this screen still needs to be finished." />
     </div>
   );
 }
