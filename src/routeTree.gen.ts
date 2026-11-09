@@ -13,9 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as AiRouteImport } from './routes/ai'
 import { Route as BuyRouteImport } from './routes/buy'
-import { Route as DomainsRouteImport } from './routes/domains'
 import { Route as RotationRouteImport } from './routes/rotation'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as DomainsIndexRouteImport } from './routes/domains.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,11 +37,6 @@ const BuyRoute = BuyRouteImport.update({
   path: '/buy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DomainsRoute = DomainsRouteImport.update({
-  id: '/domains',
-  path: '/domains',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const RotationRoute = RotationRouteImport.update({
   id: '/rotation',
   path: '/rotation',
@@ -52,24 +47,29 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DomainsIndexRoute = DomainsIndexRouteImport.update({
+  id: '/domains/',
+  path: '/domains/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
   '/ai': typeof AiRoute
   '/buy': typeof BuyRoute
-  '/domains': typeof DomainsRoute
   '/rotation': typeof RotationRoute
   '/settings': typeof SettingsRoute
+  '/domains/': typeof DomainsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
   '/ai': typeof AiRoute
   '/buy': typeof BuyRoute
-  '/domains': typeof DomainsRoute
   '/rotation': typeof RotationRoute
   '/settings': typeof SettingsRoute
+  '/domains': typeof DomainsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,26 +77,26 @@ export interface FileRoutesById {
   '/activity': typeof ActivityRoute
   '/ai': typeof AiRoute
   '/buy': typeof BuyRoute
-  '/domains': typeof DomainsRoute
   '/rotation': typeof RotationRoute
   '/settings': typeof SettingsRoute
+  '/domains/': typeof DomainsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/activity' | '/ai' | '/buy' | '/domains' | '/rotation' | '/settings'
+    '/' | '/activity' | '/ai' | '/buy' | '/rotation' | '/settings' | '/domains/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/activity' | '/ai' | '/buy' | '/domains' | '/rotation' | '/settings'
+    '/' | '/activity' | '/ai' | '/buy' | '/rotation' | '/settings' | '/domains'
   id:
     | '__root__'
     | '/'
     | '/activity'
     | '/ai'
     | '/buy'
-    | '/domains'
     | '/rotation'
     | '/settings'
+    | '/domains/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,9 +104,9 @@ export interface RootRouteChildren {
   ActivityRoute: typeof ActivityRoute
   AiRoute: typeof AiRoute
   BuyRoute: typeof BuyRoute
-  DomainsRoute: typeof DomainsRoute
   RotationRoute: typeof RotationRoute
   SettingsRoute: typeof SettingsRoute
+  DomainsIndexRoute: typeof DomainsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -139,13 +139,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/domains': {
-      id: '/domains'
-      path: '/domains'
-      fullPath: '/domains'
-      preLoaderRoute: typeof DomainsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/rotation': {
       id: '/rotation'
       path: '/rotation'
@@ -160,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/domains/': {
+      id: '/domains/'
+      path: '/domains'
+      fullPath: '/domains/'
+      preLoaderRoute: typeof DomainsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -168,9 +168,9 @@ const rootRouteChildren: RootRouteChildren = {
   ActivityRoute: ActivityRoute,
   AiRoute: AiRoute,
   BuyRoute: BuyRoute,
-  DomainsRoute: DomainsRoute,
   RotationRoute: RotationRoute,
   SettingsRoute: SettingsRoute,
+  DomainsIndexRoute: DomainsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
