@@ -32,4 +32,6 @@ const csrfMiddleware = createCsrfMiddleware({
 // project did not intentionally replace it.
 export const startInstance = createStart(() => ({
   requestMiddleware: [errorMiddleware, csrfMiddleware],
+  // Data comes from the browser (external REST API or demo store), so pages render client-side.
+  defaultSsr: false,
 }));

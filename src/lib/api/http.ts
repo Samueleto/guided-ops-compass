@@ -52,8 +52,7 @@ async function req<T>(method: string, path: string, body?: unknown, query?: Reco
   try {
     res = await fetch(url(path, query), {
       method,
-      headers: body !== undefined ? { "content-type": "application/json" } : undefined,
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      ...(body !== undefined ? { headers: { "content-type": "application/json" }, body: JSON.stringify(body) } : {}),
       credentials: "include",
       signal: ctrl.signal,
     });
@@ -152,7 +151,7 @@ export const httpApi: Api = {
       headers: { "content-type": "application/json", accept: "text/event-stream" },
       body: JSON.stringify({ conversationId, message: text }),
       credentials: "include",
-      signal,
+      signal: signal ?? null,
     }).catch(() => null);
     if (!res || !res.ok) {
       onEvent({

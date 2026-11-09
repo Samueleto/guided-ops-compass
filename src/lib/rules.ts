@@ -88,7 +88,7 @@ export function nextRuns(s: ScheduleInput, from: Date, count = 3): Date[] {
     for (let i = 1; i <= count; i++) out.push(new Date(from.getTime() + step * i));
     return out;
   }
-  const [hh, mm] = (s.time ?? "09:00").split(":").map(Number);
+  const [hh = 9, mm = 0] = (s.time ?? "09:00").split(":").map(Number);
   const w = wall(from, s.timezone);
   for (let offset = 0; out.length < count && offset < 400; offset++) {
     const base = new Date(Date.UTC(w.y, w.m, w.day + offset));
