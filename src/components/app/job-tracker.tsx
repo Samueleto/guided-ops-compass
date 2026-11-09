@@ -168,7 +168,7 @@ export function JobTracker({ job, title }: { job: Job; title?: string }) {
               </Button>
             )}
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/ai" search={{ q: `Why did ${stuck.label.toLowerCase()} fail for ${item.domain}?` }}>
+              <Link to="/ai" search={{ q: `Why did ${stuck.label.toLowerCase()} fail for ${item?.domain}?` }}>
                 <Sparkles /> Ask AI
               </Link>
             </Button>

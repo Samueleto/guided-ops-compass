@@ -184,7 +184,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t bg-background/90 backdrop-blur-xl md:hidden">
         {NAV.slice(0, 5).map((n) => (
-          <MobileTab key={n.to} to={n.to} label={n.label.split(" ")[0]} icon={n.icon} />
+          <MobileTab key={n.to} to={n.to} label={n.label.split(" ")[0] ?? n.label} icon={n.icon} />
         ))}
       </nav>
     </div>
